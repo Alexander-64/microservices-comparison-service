@@ -3,8 +3,17 @@ const Busboy = require('busboy');
 const fs = require('fs');
 const { PNG } = require('pngjs');
 const pixelmatch = require('pixelmatch');
+const Router = require('koa-router');
 
 const app = new Koa();
+const router = new Router();
+
+router.get('/health', (ctx, next) => {
+  ctx.body = 'OK';
+});
+
+
+app.use(router.routes())
 
 app.use(async (ctx) => {
   if (ctx.method === 'POST') {
@@ -51,7 +60,10 @@ app.use(async (ctx) => {
     } catch (err) {
       console.error(err);
     }
-  } else {
+  } else if (ctx.method === 'GET') {
+  }
+
+  {
     ctx.status = 405;
     ctx.body = 'Method Not Allowed';
   }
