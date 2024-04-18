@@ -9,11 +9,10 @@ const app = new Koa();
 const router = new Router();
 
 router.get('/health', (ctx, next) => {
-  ctx.body = 'OK';
+  ctx.body = { status: 'OK' };
 });
 
-
-app.use(router.routes())
+app.use(router.routes());
 
 app.use(async (ctx) => {
   if (ctx.method === 'POST') {
